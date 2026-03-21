@@ -1,0 +1,189 @@
+💎 FULL PRO WEBSITE CODE (ADVANCED VERSION)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackLines Art Studios</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0b0b0b;
+  color: white;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: gold;
+}
+
+header p {
+  color: #aaa;
+}
+
+/* BUTTONS */
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+.btn {
+  display: block;
+  margin: 12px;
+  padding: 15px;
+  text-align: center;
+  background: linear-gradient(45deg, gold, #ffcc00);
+  color: black;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* GALLERY */
+.section-title {
+  text-align: center;
+  margin-top: 40px;
+  color: gold;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.card {
+  background: #111;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+}
+
+.card-content {
+  padding: 10px;
+  text-align: center;
+}
+
+.price {
+  color: gold;
+  font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>BLACKLINES</h1>
+  <p>Premium Digital Art • Custom Designs</p>
+</header>
+
+<div class="container">
+
+<a class="btn" href="https://www.instagram.com/blacklinesartstudios/">Instagram</a>
+<a class="btn" href="https://www.facebook.com/blacklinesartstudios">Facebook</a>
+<a class="btn" href="https://www.youtube.com/@BLACKLINESArtStudios">YouTube</a>
+<a class="btn" href="https://www.threads.com/@blacklinesartstudios">Threads</a>
+<a class="btn" href="https://in.pinterest.com/blacklinesartstudios/">Pinterest</a>
+
+<a class="btn" href="https://wa.me/91XXXXXXXXXX">💬 Custom Order</a>
+
+</div>
+
+<h2 class="section-title">🖼️ Art Store</h2>
+
+<div class="gallery">
+
+<!-- ITEM 1 -->
+<div class="card">
+<img src="YOUR_IMAGE_1">
+<div class="card-content">
+<p>Artwork Name</p>
+<p class="price">₹499</p>
+<a class="btn" href="upi://pay?pa=YOUR-UPI-ID&am=499&cu=INR">Buy Now</a>
+<a class="btn" href="YOUR_DOWNLOAD_LINK">Download</a>
+</div>
+</div>
+
+<!-- ITEM 2 -->
+<div class="card">
+<img src="YOUR_IMAGE_2">
+<div class="card-content">
+<p>Artwork Name</p>
+<p class="price">₹799</p>
+<a class="btn" href="upi://pay?pa=YOUR-UPI-ID&am=799&cu=INR">Buy Now</a>
+<a class="btn" href="YOUR_DOWNLOAD_LINK">Download</a>
+</div>
+</div>
+
+</div>
+
+<footer>
+© 2026 BlackLines Art Studios
+</footer>
+
+</body>
+</html>
+⚠️ IMPORTANT SETUP (DON’T SKIP)
+1. Replace UPI
+YOUR-UPI-ID
+2. Replace WhatsApp
+91XXXXXXXXXX
+3. Replace Images
+YOUR_IMAGE_1
+4. Download Links (VERY IMPORTANT)
+
+👉 Upload files to:
+
+Google Drive
+Dropbox
+
+Then paste link in:
+
+YOUR_DOWNLOAD_LINK
+💰 HOW YOUR SYSTEM WORKS
+🛒 Customer flow:
+Opens your site (or QR)
+Sees artwork
+Clicks Buy Now
+Pays via UPI
+Clicks Download OR messages you
+⚠️ HONEST TRUTH (VERY IMPORTANT)
+
+This system is:
+✔ FREE
+✔ Simple
+❌ NOT fully automatic (payment verification manual)
+
+👉 If you want automatic delivery after payment, you need:
+
+Razorpay / Stripe (paid setup)
