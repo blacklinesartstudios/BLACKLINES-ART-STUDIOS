@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Blacklines Art Studios — Black & White Art · Commissions · Hyderabad</title>
+  <meta name="description" content="Blacklines Art Studios — black and white drawings, detailed line art, digital illustrations, and cinematic sketch designs. Custom commissions open. Based in Hyderabad, India." />
+  <meta property="og:title" content="Blacklines Art Studios" />
+  <meta property="og:description" content="Black & white art. Detailed line art. Cinematic sketches. Custom commissions." />
+  <meta property="og:image" content="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" />
+  <meta name="theme-color" content="#080808" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    :root {
+      --black:  #080808;
+      --black2: #0f0f0f;
+      --black3: #161616;
+      --g1: #2a2a2a;
+      --g2: #444;
+      --g3: #666;
+      --g4: #999;
+      --g5: #ccc;
+      --white: #f4f0eb;
+      --red:   #e60023;
+      --nav-h: 58px;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ::selection { background: var(--white); color: var(--black); }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--g2); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--g1);
+      background: rgba(8,8,8,0.97);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      min-width: 0;
+    }
+
+    .nav-logo {
+      width: 32px; height: 32px;
+      border-radius: 4px;
+      object-fit: cover;
+      border: 1px solid var(--g2);
+      flex-shrink: 0;
+    }
+
+    .nav-wordmark { line-height: 1; min-width: 0; }
+    .nav-name { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 3px; color: var(--white); display: block; white-space: nowrap; }
+    .nav-sub  { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 3px; color: var(--g3); display: block; white-space: nowrap; }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-shrink: 0;
+    }
+    .nav-links a {
+      font-size: 10px;
+      color: var(--g3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+      border: none;
+      padding: 0 16px;
+      height: 36px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      width: 44px; height: 44px;
+      background: none;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--white);
+      transition: all 0.3s;
+      transform-origin: center;
+      margin: 0 auto;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      background: rgba(8,8,8,0.99);
+      border-bottom: 1px solid var(--g1);
+      z-index: 199;
+      padding: 0 20px 24px;
+      flex-direction: column;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--g4);
+      padding: 16px 0;
+      border-bottom: 1px solid var(--g1);
+      transition: color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      display: block;
+    }
+    .mobile-menu a:hover, .mobile-menu a:active { color: var(--white); }
+    .mobile-menu .mm-cta {
+      margin-top: 20px;
+      background: var(--white);
+      color: var(--black) !important;
+      text-align: center;
+      padding: 15px !important;
+      font-weight: 700;
+      border: none !important;
+      letter-spacing: 2px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary, .btn-outline {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px 22px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 44px;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--white); color: var(--black); }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline { background: transparent; color: var(--g4); border: 1px solid var(--g2); }
+    .btn-outline:hover { border-color: var(--g4); color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      margin-top: var(--nav-h);
+      min-height: calc(100vh - var(--nav-h));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 40px;
+      border-right: 1px solid var(--g1);
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--g3);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 7vw, 108px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .hero-title em {
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--g3);
+      font-size: 1em;
+      display: block;
+      line-height: 1;
+      margin-top: 4px;
+      margin-bottom: 20px;
+    }
+
+    .hero-bio {
+      font-family: 'Crimson Pro', serif;
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--g4);
+      line-height: 1.8;
+      max-width: 400px;
+      margin-bottom: 36px;
+    }
+
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      min-height: 400px;
+    }
+    .hero-right img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%) contrast(1.1);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--black) 0%, transparent 40%);
+      z-index: 1;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 12px 0;
+      border-top: 1px solid var(--g1);
+      border-bottom: 1px solid var(--g1);
+      background: var(--black2);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--g2);
+      padding: 0 28px;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { border-bottom: 1px solid var(--g1); }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 40px 18px;
+      border-bottom: 1px solid var(--g1);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .section-label { font-size: 10px; letter-spacing: 3px; color: var(--g3); text-transform: uppercase; }
+    .section-link  { font-size: 10px; letter-spacing: 2px; color: var(--g3); transition: color 0.2s; }
+    .section-link:hover { color: var(--white); }
+
+    /* ── GALLERY ── */
+    .pin-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .pin-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4;
+      border-right: 1px solid var(--g1);
+      border-bottom: 1px solid var(--g1);
+      cursor: pointer;
+      background: var(--black3);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pin-card:nth-child(4n) { border-right: none; }
+    .pin-card img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease, filter 0.3s;
+      filter: grayscale(30%);
+    }
+    .pin-card:hover img { transform: scale(1.06); filter: grayscale(0%); }
+    .pin-card-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.3s;
+      display: flex; align-items: flex-end; padding: 12px;
+      z-index: 1;
+    }
+    .pin-card:hover .pin-card-overlay { background: rgba(0,0,0,0.6); }
+    .pin-card-label {
+      font-size: 9px; letter-spacing: 1.5px; color: var(--white);
+      opacity: 0; transition: opacity 0.3s; text-transform: uppercase;
+    }
+    .pin-card:hover .pin-card-label { opacity: 1; }
+
+    .pin-empty {
+      aspect-ratio: 3/4;
+      border-right: 1px solid var(--g1);
+      border-bottom: 1px solid var(--g1);
+      background: var(--black2);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pin-empty:nth-child(4n) { border-right: none; }
+    .pin-empty-text { font-size: 8px; letter-spacing: 1.5px; color: var(--g1); text-align: center; line-height: 1.8; text-transform: uppercase; }
+
+    .pt-row {
+      padding: 18px 40px;
+      background: var(--black2);
+      border-top: 1px solid var(--g1);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 14px; flex-wrap: wrap;
+    }
+    .pt-row-text { font-size: 10px; color: var(--g3); letter-spacing: 1px; line-height: 1.7; }
+    .pt-row-text strong { color: var(--g4); }
+    .pt-link {
+      font-size: 10px; letter-spacing: 2px;
+      background: var(--red); color: var(--white);
+      padding: 0 16px; height: 44px; text-transform: uppercase;
+      flex-shrink: 0; display: inline-flex; align-items: center;
+      -webkit-tap-highlight-color: transparent; white-space: nowrap;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .how-card { padding: 48px 36px; border-right: 1px solid var(--g1); }
+    .how-card:last-child { border-right: none; }
+    .how-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--g1); line-height: 1; margin-bottom: 14px; }
+    .how-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--white); margin-bottom: 10px; }
+    .how-desc { font-family: 'Crimson Pro', serif; font-size: 15px; font-weight: 300; color: var(--g3); line-height: 1.8; }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .about-left { padding: 60px 40px; border-right: 1px solid var(--g1); }
+    .about-title { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 3px; color: var(--white); margin-bottom: 20px; line-height: 1; }
+    .about-body { font-family: 'Crimson Pro', serif; font-size: 16px; font-weight: 300; color: var(--g4); line-height: 1.9; margin-bottom: 22px; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--g3); border: 1px solid var(--g2); padding: 5px 10px; }
+    .about-right { position: relative; overflow: hidden; min-height: 420px; }
+    .about-right img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%) contrast(1.1); }
+    .about-right-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,8,0.8) 0%, transparent 55%); }
+
+    /* ── COMMISSION ── */
+    .commission { padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
+    .commission::before {
+      content: 'COMMISSION';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 11vw, 170px);
+      color: var(--g1); white-space: nowrap;
+      pointer-events: none; letter-spacing: 8px; opacity: 0.3;
+    }
+    .commission-inner { position: relative; z-index: 1; }
+    .commission h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(30px, 5vw, 58px); letter-spacing: 4px; color: var(--white); margin-bottom: 12px; line-height: 1.1; }
+    .commission p { font-family: 'Crimson Pro', serif; font-size: 16px; font-weight: 300; color: var(--g3); margin-bottom: 36px; }
+    .commission-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── SOCIALS ── */
+    .socials-grid { display: grid; grid-template-columns: repeat(6, 1fr); }
+    .soc-card { padding: 22px 14px; border-right: 1px solid var(--g1); display: block; transition: background 0.2s; -webkit-tap-highlight-color: transparent; }
+    .soc-card:last-child { border-right: none; }
+    .soc-card:hover, .soc-card:active { background: var(--black3); }
+    .soc-dot { width: 6px; height: 6px; border-radius: 50%; margin-bottom: 10px; }
+    .soc-name { font-size: 10px; font-weight: 700; color: var(--g5); letter-spacing: 1px; margin-bottom: 4px; display: block; }
+    .soc-handle { font-size: 9px; color: var(--g2); letter-spacing: 0.5px; display: block; word-break: break-all; }
+
+    /* ── FOOTER ── */
+    footer { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; background: var(--black2); flex-wrap: wrap; gap: 12px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; }
+    .footer-logo { width: 22px; height: 22px; border-radius: 3px; object-fit: cover; }
+    .footer-name { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 3px; color: var(--g2); }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 9px; color: var(--g2); letter-spacing: 1px; transition: color 0.2s; padding: 6px 0; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-size: 9px; color: var(--g2); letter-spacing: 1px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow { animation: fadeUp 0.5s ease 0.1s both; }
+    .hero-title   { animation: fadeUp 0.5s ease 0.2s both; }
+    .hero-bio     { animation: fadeUp 0.5s ease 0.35s both; }
+    .hero-btns    { animation: fadeUp 0.5s ease 0.45s both; }
+
+    /* ══════════════════════════════════════
+       TABLET  ≤ 860px
+    ══════════════════════════════════════ */
+    @media (max-width: 860px) {
+      :root { --nav-h: 54px; }
+
+      nav { padding: 0 18px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .nav-name, .nav-sub { font-size: 15px; letter-spacing: 2px; }
+
+      /* Hero: image on top, text below */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        min-height: auto;
+      }
+      .hero-right {
+        order: 0;
+        min-height: 260px;
+        height: 40vw;
+        max-height: 340px;
+        width: 100%;
+      }
+      .hero-right img { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .hero-overlay { background: linear-gradient(to bottom, rgba(8,8,8,0.1) 0%, rgba(8,8,8,0.85) 100%); }
+      .hero-left {
+        order: 1;
+        padding: 32px 22px 36px;
+        border-right: none;
+        border-top: 1px solid var(--g1);
+        justify-content: flex-start;
+        min-height: auto;
+      }
+      .hero-title { font-size: clamp(44px, 11vw, 68px); }
+      .hero-bio   { font-size: 15px; max-width: 100%; margin-bottom: 24px; }
+
+      .section-header { padding: 16px 22px 14px; }
+
+      /* Gallery 2-col */
+      .pin-grid { grid-template-columns: repeat(2, 1fr); }
+      .pin-card { border-right: 1px solid var(--g1); }
+      .pin-card:nth-child(4n) { border-right: 1px solid var(--g1); }
+      .pin-card:nth-child(2n) { border-right: none; }
+      .pin-empty { border-right: 1px solid var(--g1); }
+      .pin-empty:nth-child(4n) { border-right: 1px solid var(--g1); }
+      .pin-empty:nth-child(2n) { border-right: none; }
+      .pt-row { padding: 16px 22px; flex-direction: column; gap: 10px; }
+      .pt-link { width: 100%; justify-content: center; }
+
+      /* How — stacked */
+      .how-grid { grid-template-columns: 1fr; }
+      .how-card { border-right: none; border-bottom: 1px solid var(--g1); padding: 28px 22px; }
+      .how-card:last-child { border-bottom: none; }
+
+      /* About — stacked, image on top */
+      .about-grid { display: flex; flex-direction: column; }
+      .about-right { order: 0; min-height: 240px; height: 50vw; max-height: 320px; width: 100%; }
+      .about-right img { position: absolute; }
+      .about-right-overlay { background: linear-gradient(to bottom, rgba(8,8,8,0.1) 0%, rgba(8,8,8,0.8) 100%); }
+      .about-left { order: 1; padding: 32px 22px; border-right: none; border-top: 1px solid var(--g1); }
+
+      /* Commission */
+      .commission { padding: 52px 22px; }
+      .commission::before { display: none; }
+      .commission-btns { flex-direction: column; align-items: center; }
+      .commission-btns a { width: 100%; max-width: 340px; }
+
+      /* Socials 3-col */
+      .socials-grid { grid-template-columns: repeat(3, 1fr); }
+      .soc-card:nth-child(3n) { border-right: none; }
+      .soc-card:nth-child(n+4) { border-top: 1px solid var(--g1); }
+
+      footer { padding: 18px 22px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    /* ══════════════════════════════════════
+       MOBILE  ≤ 480px
+    ══════════════════════════════════════ */
+    @media (max-width: 480px) {
+      :root { --nav-h: 50px; }
+
+      nav { padding: 0 14px; }
+      .nav-logo { width: 28px; height: 28px; }
+      .nav-name, .nav-sub { font-size: 12px; letter-spacing: 1.5px; }
+
+      .hero-right { height: 52vw; min-height: 200px; max-height: 260px; }
+      .hero-left { padding: 24px 16px 32px; }
+      .hero-eyebrow { font-size: 9px; letter-spacing: 1.5px; margin-bottom: 14px; }
+      .hero-title { font-size: clamp(36px, 12vw, 50px); margin-bottom: 6px; }
+      .hero-title em { font-size: 0.6em; margin-top: 6px; margin-bottom: 16px; }
+      .hero-bio { font-size: 14px; line-height: 1.7; margin-bottom: 22px; }
+      .hero-btns { flex-direction: column; gap: 8px; }
+      .hero-btns .btn-primary,
+      .hero-btns .btn-outline { width: 100%; font-size: 11px; padding: 14px; letter-spacing: 1.5px; }
+
+      .section-header { padding: 13px 16px; }
+      .section-label  { font-size: 9px; letter-spacing: 1.5px; }
+      .section-link   { font-size: 9px; }
+
+      /* Gallery stays 2-col */
+      .pin-empty-text { font-size: 7px; letter-spacing: 1px; }
+
+      .how-card  { padding: 22px 16px; }
+      .how-num   { font-size: 40px; margin-bottom: 8px; }
+      .how-title { font-size: 18px; }
+      .how-desc  { font-size: 14px; }
+
+      .about-right { height: 56vw; min-height: 180px; max-height: 260px; }
+      .about-left  { padding: 24px 16px; }
+      .about-title { font-size: 30px; letter-spacing: 2px; margin-bottom: 14px; }
+      .about-body  { font-size: 14px; margin-bottom: 18px; }
+      .tag { font-size: 8px; padding: 4px 8px; letter-spacing: 1px; }
+
+      .commission { padding: 36px 16px; }
+      .commission h2 { font-size: clamp(22px, 7vw, 34px); letter-spacing: 2px; }
+      .commission p  { font-size: 13px; margin-bottom: 24px; }
+      .commission-btns a { max-width: 100%; font-size: 11px; padding: 13px; }
+
+      /* Socials 2-col */
+      .socials-grid { grid-template-columns: repeat(2, 1fr); }
+      .soc-card { padding: 14px 12px; border-right: 1px solid var(--g1); }
+      .soc-card:nth-child(2n) { border-right: none; }
+      .soc-card:nth-child(3n) { border-right: 1px solid var(--g1); }
+      .soc-card:nth-child(n+3) { border-top: 1px solid var(--g1); }
+      .soc-card:nth-child(n+4) { border-top: 1px solid var(--g1); }
+      .soc-card:nth-child(2n):nth-child(n+3) { border-right: none; }
+      .soc-name   { font-size: 10px; }
+      .soc-handle { font-size: 8px; }
+
+      .pt-row { padding: 14px 16px; }
+      .pt-row-text { font-size: 10px; }
+
+      footer { padding: 14px 16px; }
+      .footer-links { display: none; }
+      .footer-name  { font-size: 12px; letter-spacing: 2px; }
+      .footer-copy  { font-size: 9px; }
+
+      .marquee-item { font-size: 11px; letter-spacing: 2px; padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="#home" class="nav-brand">
+      <img class="nav-logo" src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Blacklines Art Studios" />
+      <div class="nav-wordmark">
+        <span class="nav-name">BLACKLINES</span>
+        <span class="nav-sub">ART STUDIOS</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#how">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#socials">Follow</a></li>
+    </ul>
+    <a class="nav-cta" href="#commission">Commission ↗</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#gallery"    onclick="closeMenu()">Gallery</a>
+    <a href="#how"        onclick="closeMenu()">Process</a>
+    <a href="#about"      onclick="closeMenu()">About</a>
+    <a href="#socials"    onclick="closeMenu()">Follow</a>
+    <a href="#commission" onclick="closeMenu()" class="mm-cta">Commission a piece ↗</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-right">
+      <img src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Blacklines Art Studios" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-left">
+      <p class="hero-eyebrow">Hyderabad, India · Commissions Open</p>
+      <h1 class="hero-title">
+        BLACKLINES
+        <em>Art Studios.</em>
+      </h1>
+      <p class="hero-bio">
+        A creative art studio dedicated to black and white drawings, detailed line art, digital illustrations, and cinematic sketch designs. Share your vision — we bring it to life.
+      </p>
+      <div class="hero-btns">
+        <a class="btn-primary" href="#gallery">Explore gallery</a>
+        <a class="btn-outline" href="#commission">Commission a piece</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Black &amp; White Art</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Custom Commissions</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Line Art</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Digital Illustrations</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Cinematic Sketches</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Hyderabad India</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Portraits</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Character Design</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Black &amp; White Art</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Custom Commissions</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Line Art</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Digital Illustrations</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Cinematic Sketches</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Hyderabad India</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Portraits</span>
+      <span class="marquee-item">·</span>
+      <span class="marquee-item">Character Design</span>
+      <span class="marquee-item">·</span>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-label">Gallery · Pinterest Feed</span>
+      <a class="section-link" href="https://in.pinterest.com/blacklinesartstudios/" target="_blank" rel="noopener">View all on Pinterest →</a>
+    </div>
+    <div class="pin-grid">
+
+      <!-- YOUR REAL PIN -->
+      <div class="pin-card" onclick="window.open('https://in.pinterest.com/pin/1083608360367531227/','_blank')">
+        <img src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Blacklines Art Studios Logo Art" loading="lazy" />
+        <div class="pin-card-overlay"><span class="pin-card-label">View on Pinterest</span></div>
+      </div>
+
+      <!--
+      TO ADD A NEW ARTWORK — replace any pin-empty below with:
+      <div class="pin-card" onclick="window.open('YOUR_PIN_URL','_blank')">
+        <img src="YOUR_IMAGE_URL" alt="Artwork title" loading="lazy" />
+        <div class="pin-card-overlay"><span class="pin-card-label">View on Pinterest</span></div>
+      </div>
+      How to get image URL: go to pin → right-click image → Copy image address
+      -->
+
+      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2a2a2a" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+        <div class="pin-empty-text">Upload to<br>Pinterest<br>→ appears here</div>
+      </div>
+      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
+        <div class="pin-empty-text">Your next<br>artwork</div>
+      </div>
+      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
+        <div class="pin-empty-text">Your next<br>artwork</div>
+      </div>
+      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
+        <div class="pin-empty-text">Your next<br>artwork</div>
+      </div>
+      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
+        <div class="pin-empty-text">Your next<br>artwork</div>
+      </div>
+      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
+        <div class="pin-empty-text">Your next<br>artwork</div>
+      </div>
+      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
+        <div class="pin-empty-text">Your next<br>artwork</div>
+      </div>
+
+    </div>
+    <div class="pt-row">
+      <div class="pt-row-text">
+        <strong>To add artwork:</strong> go to your Pinterest pin → right-click image → Copy image address → paste into this file → push to GitHub → live instantly.
+      </div>
+      <a class="pt-link" href="https://in.pinterest.com/blacklinesartstudios/" target="_blank" rel="noopener">VIEW ALL PINS →</a>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="section-header">
+      <span class="section-label">Commission Process</span>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <div class="how-title">Share Your Idea</div>
+        <p class="how-desc">Tell us your concept — a character, a scene, a mood, a memory. The more detail you share, the closer the final art will be to your vision.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <div class="how-title">We Design It</div>
+        <p class="how-desc">You receive initial sketches and drafts. We refine together with your feedback until every line is exactly right.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <div class="how-title">Own It</div>
+        <p class="how-desc">Receive your final piece as a high-resolution digital file, physical print, or both — ready to display, gift, or sell.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-label">About the Studio</span>
+    </div>
+    <div class="about-grid">
+      <div class="about-left">
+        <h2 class="about-title">Blacklines<br>Art Studios</h2>
+        <p class="about-body">A creative art studio based in Hyderabad, India — dedicated to the power of black and white. Every piece is crafted with obsessive attention to line, contrast, and detail.</p>
+        <p class="about-body">From bold character portraits to cinematic scene illustrations, the work lives where ink meets imagination. Commissions are open — bring your idea, and we'll turn it into something you'll keep forever.</p>
+        <div class="about-tags">
+          <span class="tag">Black &amp; White</span>
+          <span class="tag">Line Art</span>
+          <span class="tag">Digital Illustrations</span>
+          <span class="tag">Cinematic Sketches</span>
+          <span class="tag">Character Design</span>
+          <span class="tag">Portraits</span>
+          <span class="tag">Hyderabad</span>
+          <span class="tag">Custom Commissions</span>
+        </div>
+      </div>
+      <div class="about-right">
+        <img src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Blacklines Art Studios" loading="lazy" />
+        <div class="about-right-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMISSION CTA -->
+  <section id="commission" class="commission">
+    <div class="commission-inner">
+      <h2>Have an idea?<br>Let's make it art.</h2>
+      <p>Commissions open · Prints available · Collaborations welcome</p>
+      <div class="commission-btns">
+        <a class="btn-primary" href="https://www.instagram.com/blacklinesartstudios/" target="_blank" rel="noopener">DM on Instagram ↗</a>
+        <a class="btn-outline"  href="https://scan.page/p/tGz5aV" target="_blank" rel="noopener">All contact links</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIALS -->
+  <section id="socials">
+    <div class="section-header">
+      <span class="section-label">Follow the Studio</span>
+    </div>
+    <div class="socials-grid">
+      <a class="soc-card" href="https://www.instagram.com/blacklinesartstudios/" target="_blank" rel="noopener">
+        <div class="soc-dot" style="background:#c13584;"></div>
+        <span class="soc-name">Instagram</span>
+        <span class="soc-handle">@blacklinesartstudios</span>
+      </a>
+      <a class="soc-card" href="https://www.facebook.com/blacklinesartstudios" target="_blank" rel="noopener">
+        <div class="soc-dot" style="background:#1877f2;"></div>
+        <span class="soc-name">Facebook</span>
+        <span class="soc-handle">blacklinesartstudios</span>
+      </a>
+      <a class="soc-card" href="https://www.youtube.com/@BLACKLINESArtStudios" target="_blank" rel="noopener">
+        <div class="soc-dot" style="background:#ff0000;"></div>
+        <span class="soc-name">YouTube</span>
+        <span class="soc-handle">@BLACKLINESArtStudios</span>
+      </a>
+      <a class="soc-card" href="https://www.threads.com/@blacklinesartstudios" target="_blank" rel="noopener">
+        <div class="soc-dot" style="background:#f0f0f0;"></div>
+        <span class="soc-name">Threads</span>
+        <span class="soc-handle">@blacklinesartstudios</span>
+      </a>
+      <a class="soc-card" href="https://in.pinterest.com/blacklinesartstudios/" target="_blank" rel="noopener">
+        <div class="soc-dot" style="background:#e60023;"></div>
+        <span class="soc-name">Pinterest</span>
+        <span class="soc-handle">blacklinesartstudios</span>
+      </a>
+      <a class="soc-card" href="https://scan.page/p/tGz5aV" target="_blank" rel="noopener">
+        <div class="soc-dot" style="background:#888;"></div>
+        <span class="soc-name">All Links</span>
+        <span class="soc-handle">scan.page/p/tGz5aV</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#home" class="footer-brand">
+      <img class="footer-logo" src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Blacklines logo" />
+      <span class="footer-name">BLACKLINES ART STUDIOS</span>
+    </a>
+    <div class="footer-links">
+      <a href="#gallery">Gallery</a>
+      <a href="#how">Process</a>
+      <a href="#about">About</a>
+      <a href="#commission">Commission</a>
+      <a href="#socials">Follow</a>
+    </div>
+    <div class="footer-copy">© 2026 · Hyderabad, India</div>
+  </footer>
+
+  <script>
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const nav        = document.getElementById('mainNav');
+
+    hamburger.addEventListener('click', function() {
+      var isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', function(e) {
+      if (mobileMenu.classList.contains('open') &&
+          !mobileMenu.contains(e.target) &&
+          !hamburger.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('scroll', function() {
+      nav.style.borderBottomColor = window.scrollY > 4 ? '#2a2a2a' : 'transparent';
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
