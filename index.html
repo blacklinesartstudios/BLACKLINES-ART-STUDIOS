@@ -408,9 +408,68 @@
     .about-body { font-family: 'Crimson Pro', serif; font-size: 16px; font-weight: 300; color: var(--g4); line-height: 1.9; margin-bottom: 22px; }
     .about-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--g3); border: 1px solid var(--g2); padding: 5px 10px; }
-    .about-right { position: relative; overflow: hidden; min-height: 420px; }
-    .about-right img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%) contrast(1.1); }
-    .about-right-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,8,0.8) 0%, transparent 55%); }
+    .about-right {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--black2);
+    }
+
+    .deck-stage {
+      position: relative;
+      width: 240px;
+      height: 320px;
+    }
+
+    .deck-card {
+      position: absolute;
+      width: 200px;
+      height: 270px;
+      border-radius: 5px;
+      overflow: hidden;
+      border: 1px solid var(--g2);
+      left: 50%;
+      top: 50%;
+      margin-left: -100px;
+      margin-top: -135px;
+      will-change: transform, opacity, box-shadow;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.7);
+    }
+
+    .deck-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    .shuffle-counter {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .shuffle-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--g1);
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+    .shuffle-dot.active { background: var(--g4); }
+
+    .about-right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, var(--black2) 0%, transparent 14%, transparent 86%, var(--black2) 100%);
+      pointer-events: none;
+      z-index: 20;
+    }
+
 
     /* ── COMMISSION ── */
     .commission { padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
@@ -513,9 +572,7 @@
 
       /* About — stacked, image on top */
       .about-grid { display: flex; flex-direction: column; }
-      .about-right { order: 0; min-height: 240px; height: 50vw; max-height: 320px; width: 100%; }
-      .about-right img { position: absolute; }
-      .about-right-overlay { background: linear-gradient(to bottom, rgba(8,8,8,0.1) 0%, rgba(8,8,8,0.8) 100%); }
+      .about-right { order: 0; min-height: 400px; height: auto; max-height: none; width: 100%; } .deck-stage { width: 210px; height: 290px; } .deck-card { width: 175px; height: 235px; margin-left: -87px; margin-top: -117px; }
       .about-left { order: 1; padding: 32px 22px; border-right: none; border-top: 1px solid var(--g1); }
 
       /* Commission */
@@ -563,7 +620,7 @@
       .how-title { font-size: 18px; }
       .how-desc  { font-size: 14px; }
 
-      .about-right { height: 56vw; min-height: 180px; max-height: 260px; }
+      .about-right { height: auto; min-height: 340px; max-height: none; } .deck-stage { width: 180px; height: 260px; } .deck-card { width: 155px; height: 207px; margin-left: -77px; margin-top: -103px; }
       .about-left  { padding: 24px 16px; }
       .about-title { font-size: 30px; letter-spacing: 2px; margin-bottom: 14px; } .about-title span { font-size: 0.42em; letter-spacing: 0.52em; }
       .about-body  { font-size: 14px; margin-bottom: 18px; }
@@ -794,9 +851,16 @@
           <span class="tag">Hyderabad</span>
           <span class="tag">Custom Commissions</span>
         </div>
+        <a href="mailto:blacklinesartstudios@gmail.com"
+           style="display:inline-block;margin-top:20px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--g4);border-bottom:1px solid var(--g2);padding-bottom:2px;transition:color 0.2s;">
+          blacklinesartstudios@gmail.com
+        </a>
       </div>
       <div class="about-right">
-        <img src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Blacklines Art Studios" loading="lazy" />
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="deck-stage" id="deckStage"></div>
+          <div class="shuffle-counter" id="shuffleDots"></div>
+        </div>
         <div class="about-right-overlay"></div>
       </div>
     </div>
@@ -807,8 +871,13 @@
     <div class="commission-inner">
       <h2>Have an idea?<br>Let's make it art.</h2>
       <p>Commissions open · Prints available · Collaborations welcome</p>
+      <a href="mailto:blacklinesartstudios@gmail.com"
+         style="display:inline-block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;color:var(--g4);margin-bottom:32px;margin-top:-8px;border-bottom:1px solid var(--g2);padding-bottom:2px;transition:color 0.2s;">
+        blacklinesartstudios@gmail.com
+      </a>
       <div class="commission-btns">
         <a class="btn-primary" href="https://www.instagram.com/blacklinesartstudios/" target="_blank" rel="noopener">DM on Instagram ↗</a>
+        <a class="btn-outline"  href="mailto:blacklinesartstudios@gmail.com">Email us ↗</a>
         <a class="btn-outline"  href="https://scan.page/p/tGz5aV" target="_blank" rel="noopener">All contact links</a>
       </div>
     </div>
@@ -866,7 +935,7 @@
       <a href="#commission">Commission</a>
       <a href="#socials">Follow</a>
     </div>
-    <div class="footer-copy">© 2026 · Hyderabad, India</div>
+    <div style="text-align:right;"><div class="footer-copy">© 2026 · Hyderabad, India</div><div style="font-size:9px;color:var(--g2);letter-spacing:1px;margin-top:3px;">blacklinesartstudios@gmail.com</div></div>
   </footer>
 
   <script>
@@ -899,6 +968,292 @@
     window.addEventListener('scroll', function() {
       nav.style.borderBottomColor = window.scrollY > 4 ? '#2a2a2a' : 'transparent';
     }, { passive: true });
+
+
+    // ── DECK CAROUSEL ──
+    // Collects images from gallery. Fewer than 6? repeats to fill all slots.
+    // Animation: slides in slowly from right → pauses 2s → flicks left fast → floats to back of deck
+    (function() {
+
+      // ── AUTO-COLLECT images from gallery section ──
+      var galleryImgs = document.querySelectorAll('.pin-card img');
+      var artImages = [];
+      galleryImgs.forEach(function(img) { artImages.push(img.src); });
+
+      // Fallback if gallery empty
+      if (artImages.length === 0) {
+        artImages = ['https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'];
+      }
+
+      // Always fill 6 slots, repeating if needed
+      var TARGET = 6;
+      var images = [];
+      while (images.length < TARGET) images = images.concat(artImages);
+      images = images.slice(0, TARGET);
+
+      var stage  = document.getElementById('deckStage');
+      var dotsEl = document.getElementById('shuffleDots');
+      if (!stage) return;
+
+      var cards    = [];
+      var dots     = [];
+      var current  = 0;
+      var total    = images.length;
+      var busy     = false;
+
+      // Build dots
+      images.forEach(function(_, i) {
+        var dot = document.createElement('div');
+        dot.className = 'shuffle-dot' + (i === 0 ? ' active' : '');
+        dotsEl.appendChild(dot);
+        dots.push(dot);
+      });
+
+      // Build cards — back to front so card[0] is on top in DOM z-order
+      for (var i = total - 1; i >= 0; i--) {
+        var card = document.createElement('div');
+        card.className = 'deck-card';
+        var img = document.createElement('img');
+        img.src     = images[i];
+        img.alt     = 'Artwork ' + (i + 1);
+        img.loading = 'lazy';
+        card.appendChild(img);
+        stage.appendChild(card);
+        cards.unshift(card);
+      }
+
+      // Stack layout: cards behind peek with offset + darken
+      function layout(activeIdx, animated) {
+        cards.forEach(function(card, i) {
+          var layer = (i - activeIdx + total) % total;
+          // layer 0 = front, 1,2,3... = behind
+          var tx     = layer * 8;          // peek right px
+          var ty     = layer * 5;          // rise up
+          var scl    = 1 - layer * 0.05;   // shrink
+          var bri    = 1 - layer * 0.15;   // darken
+          var zi     = total - layer;
+          var op     = layer >= total - 1 ? 0 : 1; // hide deepest
+
+          if (animated) {
+            card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease, filter 0.4s ease';
+          } else {
+            card.style.transition = 'none';
+          }
+          card.style.zIndex    = zi;
+          card.style.transform = 'translate(' + tx + 'px, ' + (-ty) + 'px) scale(' + scl + ')';
+          card.style.filter    = 'brightness(' + bri + ')';
+          card.style.opacity   = op;
+        });
+      }
+
+      // First card enters from right immediately on load
+      function enterFirst() {
+        var front = cards[0];
+        // Start off-screen right
+        front.style.transition = 'none';
+        front.style.transform  = 'translateX(340px) scale(0.88)';
+        front.style.opacity    = '0';
+        front.style.zIndex     = total;
+        front.style.filter     = 'brightness(1)';
+        void front.offsetWidth;
+
+        // Slide slowly in from right
+        front.style.transition = 'transform 0.9s cubic-bezier(0.22,1,0.36,1), opacity 0.6s ease';
+        front.style.transform  = 'translate(0,0) scale(1)';
+        front.style.opacity    = '1';
+
+        // Layout rest of deck behind (no animation)
+        cards.forEach(function(card, i) {
+          if (i === 0) return;
+          var layer = i;
+          card.style.transition = 'none';
+          card.style.zIndex     = total - layer;
+          card.style.transform  = 'translate(' + (layer*8) + 'px,' + (-(layer*5)) + 'px) scale(' + (1-layer*0.05) + ')';
+          card.style.filter     = 'brightness(' + (1-layer*0.15) + ')';
+          card.style.opacity    = layer >= total-1 ? '0' : '1';
+        });
+      }
+
+      function advance() {
+        if (busy) return;
+        busy = true;
+
+        var front = cards[current];
+        dots[current].classList.remove('active');
+
+        // 1. FAST flick to left
+        front.style.transition = 'transform 0.28s cubic-bezier(0.4,0,1,1), opacity 0.25s ease';
+        front.style.transform  = 'translateX(-360px) rotate(-8deg) scale(0.85)';
+        front.style.opacity    = '0';
+
+        setTimeout(function() {
+          // 2. Silently move flicked card to back position (invisible)
+          front.style.transition = 'none';
+          front.style.transform  = 'translate(' + ((total-1)*8) + 'px,' + (-((total-1)*5)) + 'px) scale(' + (1-(total-1)*0.05) + ')';
+          front.style.opacity    = '0';
+          front.style.zIndex     = '1';
+          void front.offsetWidth;
+
+          // 3. Advance index
+          current = (current + 1) % total;
+          dots[current].classList.add('active');
+
+          // 4. New front card slides SLOWLY in from right
+          var newFront = cards[current];
+          newFront.style.transition = 'none';
+          newFront.style.transform  = 'translateX(340px) scale(0.88)';
+          newFront.style.opacity    = '0';
+          newFront.style.zIndex     = total;
+          void newFront.offsetWidth;
+
+          newFront.style.transition = 'transform 0.85s cubic-bezier(0.22,1,0.36,1), opacity 0.55s ease';
+          newFront.style.transform  = 'translate(0,0) scale(1)';
+          newFront.style.opacity    = '1';
+          newFront.style.filter     = 'brightness(1)';
+
+          // 5. Rest of deck settles into place behind
+          setTimeout(function() {
+            cards.forEach(function(card, i) {
+              if (i === current) return;
+              var layer = (i - current + total) % total;
+              card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease, filter 0.4s ease';
+              card.style.zIndex     = total - layer;
+              card.style.transform  = 'translate(' + (layer*8) + 'px,' + (-(layer*5)) + 'px) scale(' + (1-layer*0.05) + ')';
+              card.style.filter     = 'brightness(' + (1-layer*0.15) + ')';
+              card.style.opacity    = layer >= total-1 ? '0' : '1';
+            });
+
+            setTimeout(function() { busy = false; }, 500);
+          }, 200);
+
+        }, 300);
+      }
+
+      // Initialise
+      enterFirst();
+
+      // 2s pause then loop: 0.85s slide in + 2s pause + 0.28s flick + buffer = ~3.5s
+      setTimeout(function() {
+        setInterval(advance, 3500);
+      }, 2900);
+
+    })();
+
+
+    // ── 3D CIRCULAR DECK CAROUSEL ──
+    // Collects images from the gallery on the page automatically.
+    // If fewer than 6 images, repeats existing ones to fill all slots.
+    (function() {
+
+      // ── AUTO-COLLECT from gallery ──
+      var galleryImgs = document.querySelectorAll('.pin-card img');
+      var artImages = [];
+      galleryImgs.forEach(function(img) { artImages.push(img.src); });
+
+      // Fallback: use logo if gallery empty
+      if (artImages.length === 0) {
+        artImages = ['https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'];
+      }
+
+      // Fill to 6 slots by repeating
+      var TARGET = 6;
+      var images = [];
+      while (images.length < TARGET) images = images.concat(artImages);
+      images = images.slice(0, TARGET);
+
+      var container = document.getElementById('deckContainer');
+      if (!container) return;
+
+      var total   = images.length;
+      var current = 0;
+      var busy    = false;
+
+      // ── Build cards ──
+      var cards = [];
+      images.forEach(function(src, i) {
+        var card = document.createElement('div');
+        card.className = 'deck-card';
+
+        var img = document.createElement('img');
+        img.src     = src;
+        img.alt     = 'Artwork ' + (i + 1);
+        img.loading = i === 0 ? 'eager' : 'lazy';
+        card.appendChild(img);
+        container.appendChild(card);
+        cards.push(card);
+      });
+
+      // ── Position all cards in 3D circular arc ──
+      // Cards arranged around a circle in 3D:
+      // index 0 = front (big, close), last = back (small, far)
+      function positionCards() {
+        var n = total;
+        cards.forEach(function(card, i) {
+          // slot = position relative to current front
+          var slot = ((i - current) % n + n) % n;
+          // slot 0 = front, slot 1,2,3... = progressively behind
+          var pct  = slot / (n - 1);   // 0=front, 1=back
+
+          var tz    = -pct * 420;       // push back into screen
+          var scale = 1 - pct * 0.38;  // shrink toward back
+          var rotY  = pct * 8;          // slight angle toward back
+          var opacity = slot === 0 ? 1 : (1 - pct * 0.45);
+          var zIdx  = n - slot;
+
+          card.style.zIndex   = zIdx;
+          card.style.opacity  = opacity;
+          card.style.filter   = 'grayscale(' + Math.round(pct * 45) + '%) brightness(' + (1 - pct * 0.3) + ')';
+          card.style.transform =
+            'translateZ(' + tz + 'px) scale(' + scale + ') rotateY(' + rotY + 'deg)';
+        });
+      }
+
+      // Apply positions instantly (no transition) on first load
+      cards.forEach(function(c) { c.style.transition = 'none'; });
+      positionCards();
+
+      // ── Animate one step forward ──
+      function advance() {
+        if (busy) return;
+        busy = true;
+
+        var frontCard = cards[current];
+
+        // Step 1: front card SLOWLY approaches (zoom in slightly) — 0.6s
+        frontCard.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1), opacity 0.3s, filter 0.3s';
+        frontCard.style.transform  = 'translateZ(60px) scale(1.08) rotateY(0deg)';
+
+        setTimeout(function() {
+          // Step 2: FAST shuffle off to left — 0.35s
+          frontCard.style.transition = 'transform 0.35s cubic-bezier(0.55,0,1,0.45), opacity 0.3s, filter 0.3s';
+          frontCard.style.transform  = 'translateX(-380px) translateZ(60px) scale(0.9) rotateY(-25deg)';
+          frontCard.style.opacity    = '0';
+
+          setTimeout(function() {
+            // Step 3: move to back silently
+            current = (current + 1) % total;
+
+            // Reset swept card instantly to far back position
+            frontCard.style.transition = 'none';
+            frontCard.style.transform  = 'translateZ(-420px) scale(0.62) rotateY(8deg)';
+            frontCard.style.opacity    = '0.05';
+            void frontCard.offsetWidth;
+
+            // Animate everyone smoothly into new positions
+            cards.forEach(function(c) {
+              c.style.transition = 'transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.45s ease, filter 0.45s ease';
+            });
+            positionCards();
+
+            setTimeout(function() { busy = false; }, 600);
+          }, 380);
+        }, 700); // 0.7s approach pause before shuffle
+      }
+
+      // 2s pause between each cycle (approach 0.7s + shuffle 0.35s + settle + gap)
+      setInterval(advance, 2800);
+    })();
+
   </script>
 
 </body>
