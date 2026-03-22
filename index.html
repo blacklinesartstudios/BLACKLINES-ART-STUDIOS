@@ -100,6 +100,26 @@
     }
     .nav-links a:hover { color: var(--white); }
 
+    .nav-app {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white);
+      background: transparent;
+      border: 0.5px solid var(--g2);
+      padding: 0 14px;
+      height: 36px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 2px;
+    }
+    .nav-app:hover { border-color: var(--g4); color: var(--white); }
+
     .nav-cta {
       font-family: 'Space Mono', monospace;
       font-size: 10px;
@@ -564,7 +584,7 @@
       :root { --nav-h: 54px; }
 
       nav { padding: 0 18px; }
-      .nav-links, .nav-cta { display: none; }
+      .nav-links, .nav-cta, .nav-app { display: none; }
       .hamburger { display: flex; }
       .nav-name, .nav-sub { font-size: 15px; letter-spacing: 2px; }
 
@@ -712,6 +732,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#socials">Follow</a></li>
     </ul>
+    <a class="nav-app" href="app.html">Open App ↗</a>
     <a class="nav-cta" href="#commission">Commission ↗</a>
     <button class="hamburger" id="hamburger" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -724,6 +745,7 @@
     <a href="#how"        onclick="closeMenu()">Process</a>
     <a href="#about"      onclick="closeMenu()">About</a>
     <a href="#socials"    onclick="closeMenu()">Follow</a>
+    <a href="app.html"    onclick="closeMenu()" style="color:var(--g4);">Open App ↗</a>
     <a href="#commission" onclick="closeMenu()" class="mm-cta">Commission a piece ↗</a>
   </div>
 
@@ -929,6 +951,20 @@
         <div class="soc-dot" style="background:#888;"></div>
         <span class="soc-name">All Links</span>
         <span class="soc-handle">scan.page/p/tGz5aV</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- APP BANNER -->
+  <section style="background:var(--black2);border-bottom:1px solid var(--g1);">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:28px 40px;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--white);margin-bottom:4px;">Get the App</div>
+        <div style="font-family:'Crimson Pro',serif;font-size:14px;font-weight:300;color:var(--g4);">Gallery · Commission · Chat · Notifications — all in one place</div>
+      </div>
+      <a href="app.html"
+         style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:var(--black);padding:12px 24px;border-radius:2px;white-space:nowrap;flex-shrink:0;">
+        Open App ↗
       </a>
     </div>
   </section>
