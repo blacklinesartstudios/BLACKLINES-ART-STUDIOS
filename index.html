@@ -411,63 +411,104 @@
     .about-right {
       position: relative;
       overflow: hidden;
-      min-height: 420px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 460px;
       background: var(--black2);
     }
 
-    .deck-stage {
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.7s cubic-bezier(0.77,0,0.175,1);
+      will-change: transform;
+    }
+
+    .slider-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
       position: relative;
-      width: 240px;
-      height: 320px;
-    }
-
-    .deck-card {
-      position: absolute;
-      width: 200px;
-      height: 270px;
-      border-radius: 5px;
       overflow: hidden;
-      border: 1px solid var(--g2);
-      left: 50%;
-      top: 50%;
-      margin-left: -100px;
-      margin-top: -135px;
-      will-change: transform, opacity, box-shadow;
-      box-shadow: 0 6px 32px rgba(0,0,0,0.7);
     }
 
-    .deck-card img {
-      width: 100%; height: 100%;
-      object-fit: cover;
+    .slider-slide img {
+      position: absolute;
+      inset: 8px;
+      width: calc(100% - 16px);
+      height: calc(100% - 16px);
+      object-fit: contain;
+      object-position: center;
       display: block;
+      filter: grayscale(15%) contrast(1.05);
+      transition: transform 6s ease;
+      background: var(--black3);
+    }
+
+    .slider-slide.active img {
+      transform: scale(1.02);
+    }
+
+    .slider-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 48px 28px 20px;
+      background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 100%);
+      z-index: 2;
+    }
+
+    .slider-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--g4);
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 5px;
+      z-index: 3;
+    }
+
+    .slider-dot {
+      width: 20px;
+      height: 2px;
+      background: var(--g2);
+      transition: background 0.3s, width 0.3s;
+      border-radius: 1px;
+    }
+    .slider-dot.active { background: var(--white); width: 32px; }
+
+    .slider-arrows {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 3;
       pointer-events: none;
     }
 
-    .shuffle-counter {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
-    .shuffle-dot {
-      width: 5px; height: 5px;
+    .slider-arrow {
+      width: 36px; height: 36px;
+      border: 0.5px solid rgba(255,255,255,0.2);
+      background: rgba(8,8,8,0.5);
       border-radius: 50%;
-      background: var(--g1);
-      transition: background 0.3s;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      pointer-events: all;
+      transition: background 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      backdrop-filter: blur(4px);
     }
-    .shuffle-dot.active { background: var(--g4); }
+    .slider-arrow:hover { background: rgba(8,8,8,0.85); border-color: rgba(255,255,255,0.4); }
+    .slider-arrow svg { width: 14px; height: 14px; }
 
     .about-right-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, var(--black2) 0%, transparent 14%, transparent 86%, var(--black2) 100%);
-      pointer-events: none;
-      z-index: 20;
+      display: none;
     }
 
 
@@ -572,7 +613,7 @@
 
       /* About — stacked, image on top */
       .about-grid { display: flex; flex-direction: column; }
-      .about-right { order: 0; min-height: 400px; height: auto; max-height: none; width: 100%; } .deck-stage { width: 210px; height: 290px; } .deck-card { width: 175px; height: 235px; margin-left: -87px; margin-top: -117px; }
+      .about-right { order: 0; height: 360px; max-height: none; width: 100%; } .slider-track { height: 100%; } .slider-slide { height: 100%; }
       .about-left { order: 1; padding: 32px 22px; border-right: none; border-top: 1px solid var(--g1); }
 
       /* Commission */
@@ -620,7 +661,7 @@
       .how-title { font-size: 18px; }
       .how-desc  { font-size: 14px; }
 
-      .about-right { height: auto; min-height: 340px; max-height: none; } .deck-stage { width: 180px; height: 260px; } .deck-card { width: 155px; height: 207px; margin-left: -77px; margin-top: -103px; }
+      .about-right { height: 56vw; min-height: 240px; max-height: 320px; width: 100%; } .slider-track { height: 100%; } .slider-slide { height: 100%; }
       .about-left  { padding: 24px 16px; }
       .about-title { font-size: 30px; letter-spacing: 2px; margin-bottom: 14px; } .about-title span { font-size: 0.42em; letter-spacing: 0.52em; }
       .about-body  { font-size: 14px; margin-bottom: 18px; }
@@ -746,64 +787,28 @@
     </div>
   </div>
 
-  <!-- GALLERY -->
+  <!-- GALLERY — Auto-updates from Instagram via Behold.so -->
   <section id="gallery">
     <div class="section-header">
-      <span class="section-label">Gallery · Pinterest Feed</span>
-      <a class="section-link" href="https://in.pinterest.com/blacklinesartstudios/" target="_blank" rel="noopener">View all on Pinterest →</a>
+      <span class="section-label">Gallery · Live Instagram Feed</span>
+      <a class="section-link" href="https://www.instagram.com/blacklinesartstudios/" target="_blank" rel="noopener">@blacklinesartstudios →</a>
     </div>
-    <div class="pin-grid">
 
-      <!-- YOUR REAL PIN -->
-      <div class="pin-card" onclick="window.open('https://in.pinterest.com/pin/1083608360367531227/','_blank')">
-        <img src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Blacklines Art Studios Logo Art" loading="lazy" />
-        <div class="pin-card-overlay"><span class="pin-card-label">View on Pinterest</span></div>
-      </div>
-
-      <!--
-      TO ADD A NEW ARTWORK — replace any pin-empty below with:
-      <div class="pin-card" onclick="window.open('YOUR_PIN_URL','_blank')">
-        <img src="YOUR_IMAGE_URL" alt="Artwork title" loading="lazy" />
-        <div class="pin-card-overlay"><span class="pin-card-label">View on Pinterest</span></div>
-      </div>
-      How to get image URL: go to pin → right-click image → Copy image address
-      -->
-
-      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2a2a2a" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
-        <div class="pin-empty-text">Upload to<br>Pinterest<br>→ appears here</div>
-      </div>
-      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
-        <div class="pin-empty-text">Your next<br>artwork</div>
-      </div>
-      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
-        <div class="pin-empty-text">Your next<br>artwork</div>
-      </div>
-      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
-        <div class="pin-empty-text">Your next<br>artwork</div>
-      </div>
-      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
-        <div class="pin-empty-text">Your next<br>artwork</div>
-      </div>
-      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
-        <div class="pin-empty-text">Your next<br>artwork</div>
-      </div>
-      <div class="pin-empty" onclick="window.open('https://in.pinterest.com/blacklinesartstudios/','_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
-        <div class="pin-empty-text">Your next<br>artwork</div>
-      </div>
-
+    <div style="padding: 32px 24px; background: var(--black);">
+      <behold-widget feed-id="eNNEIMSOYEeLPBICuHKP"></behold-widget>
+      <script>
+        (() => {
+          const d=document,s=d.createElement("script");s.type="module";
+          s.src="https://w.behold.so/widget.js";d.head.append(s);
+        })();
+      </script>
     </div>
+
     <div class="pt-row">
       <div class="pt-row-text">
-        <strong>To add artwork:</strong> go to your Pinterest pin → right-click image → Copy image address → paste into this file → push to GitHub → live instantly.
+        <strong>Auto-updating:</strong> every Instagram post appears here automatically. No manual updates needed.
       </div>
-      <a class="pt-link" href="https://in.pinterest.com/blacklinesartstudios/" target="_blank" rel="noopener">VIEW ALL PINS →</a>
+      <a class="pt-link" href="https://www.instagram.com/blacklinesartstudios/" target="_blank" rel="noopener">FOLLOW ON INSTAGRAM →</a>
     </div>
   </section>
 
@@ -856,11 +861,17 @@
           blacklinesartstudios@gmail.com
         </a>
       </div>
-      <div class="about-right">
-        <div style="display:flex;flex-direction:column;align-items:center;">
-          <div class="deck-stage" id="deckStage"></div>
-          <div class="shuffle-counter" id="shuffleDots"></div>
+      <div class="about-right" id="aboutSlider">
+        <div class="slider-track" id="sliderTrack"></div>
+        <div class="slider-arrows">
+          <div class="slider-arrow" id="sliderPrev">
+            <svg viewBox="0 0 14 14" fill="none" stroke="#f4f0eb" stroke-width="1.5"><polyline points="9,2 4,7 9,12"/></svg>
+          </div>
+          <div class="slider-arrow" id="sliderNext">
+            <svg viewBox="0 0 14 14" fill="none" stroke="#f4f0eb" stroke-width="1.5"><polyline points="5,2 10,7 5,12"/></svg>
+          </div>
         </div>
+        <div class="slider-dots" id="sliderDots"></div>
         <div class="about-right-overlay"></div>
       </div>
     </div>
@@ -1140,118 +1151,93 @@
     })();
 
 
-    // ── 3D CIRCULAR DECK CAROUSEL ──
-    // Collects images from the gallery on the page automatically.
-    // If fewer than 6 images, repeats existing ones to fill all slots.
+    // ── PREMIUM HORIZONTAL SLIDER ──
+    // Auto-collects images from gallery. Repeats if fewer than 5.
     (function() {
+      var track  = document.getElementById('sliderTrack');
+      var dotsEl = document.getElementById('sliderDots');
+      var btnPrev = document.getElementById('sliderPrev');
+      var btnNext = document.getElementById('sliderNext');
+      if (!track) return;
 
-      // ── AUTO-COLLECT from gallery ──
-      var galleryImgs = document.querySelectorAll('.pin-card img');
+      // collect gallery images
+      var found = document.querySelectorAll('.pin-card img');
       var artImages = [];
-      galleryImgs.forEach(function(img) { artImages.push(img.src); });
-
-      // Fallback: use logo if gallery empty
+      found.forEach(function(img) { artImages.push(img.src); });
       if (artImages.length === 0) {
         artImages = ['https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'];
       }
 
-      // Fill to 6 slots by repeating
-      var TARGET = 6;
+      // fill to min 5 slides
+      var TARGET = Math.max(5, artImages.length);
       var images = [];
       while (images.length < TARGET) images = images.concat(artImages);
       images = images.slice(0, TARGET);
 
-      var container = document.getElementById('deckContainer');
-      if (!container) return;
-
       var total   = images.length;
       var current = 0;
-      var busy    = false;
+      var timer;
+      var slides  = [];
+      var dots    = [];
 
-      // ── Build cards ──
-      var cards = [];
+      // build slides
       images.forEach(function(src, i) {
-        var card = document.createElement('div');
-        card.className = 'deck-card';
+        var slide = document.createElement('div');
+        slide.className = 'slider-slide' + (i === 0 ? ' active' : '');
 
         var img = document.createElement('img');
         img.src     = src;
         img.alt     = 'Artwork ' + (i + 1);
         img.loading = i === 0 ? 'eager' : 'lazy';
-        card.appendChild(img);
-        container.appendChild(card);
-        cards.push(card);
+        slide.appendChild(img);
+
+        // count label
+        var label = document.createElement('div');
+        label.className = 'slider-label';
+        label.innerHTML = '<span class="slider-count">' + String(i+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0') + '</span>';
+        slide.appendChild(label);
+
+        track.appendChild(slide);
+        slides.push(slide);
+
+        // dot
+        if (dotsEl) {
+          var dot = document.createElement('div');
+          dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', function() { goTo(i); resetTimer(); });
+          dotsEl.appendChild(dot);
+          dots.push(dot);
+        }
       });
 
-      // ── Position all cards in 3D circular arc ──
-      // Cards arranged around a circle in 3D:
-      // index 0 = front (big, close), last = back (small, far)
-      function positionCards() {
-        var n = total;
-        cards.forEach(function(card, i) {
-          // slot = position relative to current front
-          var slot = ((i - current) % n + n) % n;
-          // slot 0 = front, slot 1,2,3... = progressively behind
-          var pct  = slot / (n - 1);   // 0=front, 1=back
-
-          var tz    = -pct * 420;       // push back into screen
-          var scale = 1 - pct * 0.38;  // shrink toward back
-          var rotY  = pct * 8;          // slight angle toward back
-          var opacity = slot === 0 ? 1 : (1 - pct * 0.45);
-          var zIdx  = n - slot;
-
-          card.style.zIndex   = zIdx;
-          card.style.opacity  = opacity;
-          card.style.filter   = 'grayscale(' + Math.round(pct * 45) + '%) brightness(' + (1 - pct * 0.3) + ')';
-          card.style.transform =
-            'translateZ(' + tz + 'px) scale(' + scale + ') rotateY(' + rotY + 'deg)';
-        });
+      function goTo(index) {
+        slides[current].classList.remove('active');
+        dots[current] && dots[current].classList.remove('active');
+        current = (index + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        slides[current].classList.add('active');
+        dots[current] && dots[current].classList.add('active');
       }
 
-      // Apply positions instantly (no transition) on first load
-      cards.forEach(function(c) { c.style.transition = 'none'; });
-      positionCards();
-
-      // ── Animate one step forward ──
-      function advance() {
-        if (busy) return;
-        busy = true;
-
-        var frontCard = cards[current];
-
-        // Step 1: front card SLOWLY approaches (zoom in slightly) — 0.6s
-        frontCard.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1), opacity 0.3s, filter 0.3s';
-        frontCard.style.transform  = 'translateZ(60px) scale(1.08) rotateY(0deg)';
-
-        setTimeout(function() {
-          // Step 2: FAST shuffle off to left — 0.35s
-          frontCard.style.transition = 'transform 0.35s cubic-bezier(0.55,0,1,0.45), opacity 0.3s, filter 0.3s';
-          frontCard.style.transform  = 'translateX(-380px) translateZ(60px) scale(0.9) rotateY(-25deg)';
-          frontCard.style.opacity    = '0';
-
-          setTimeout(function() {
-            // Step 3: move to back silently
-            current = (current + 1) % total;
-
-            // Reset swept card instantly to far back position
-            frontCard.style.transition = 'none';
-            frontCard.style.transform  = 'translateZ(-420px) scale(0.62) rotateY(8deg)';
-            frontCard.style.opacity    = '0.05';
-            void frontCard.offsetWidth;
-
-            // Animate everyone smoothly into new positions
-            cards.forEach(function(c) {
-              c.style.transition = 'transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.45s ease, filter 0.45s ease';
-            });
-            positionCards();
-
-            setTimeout(function() { busy = false; }, 600);
-          }, 380);
-        }, 700); // 0.7s approach pause before shuffle
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(function() { goTo(current + 1); }, 3500);
       }
 
-      // 2s pause between each cycle (approach 0.7s + shuffle 0.35s + settle + gap)
-      setInterval(advance, 2800);
+      // arrow controls
+      btnPrev && btnPrev.addEventListener('click', function() { goTo(current - 1); resetTimer(); });
+      btnNext && btnNext.addEventListener('click', function() { goTo(current + 1); resetTimer(); });
+
+      // touch swipe
+      var touchX = 0;
+      track.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', function(e) {
+        var diff = touchX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) { goTo(current + (diff > 0 ? 1 : -1)); resetTimer(); }
+      }, { passive: true });
+
+      // start auto-play
+      resetTimer();
     })();
 
   </script>
