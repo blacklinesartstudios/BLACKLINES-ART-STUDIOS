@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-title" content="Blacklines"/>
+  <meta name="theme-color" content="#080808"/>
+  <title>Blacklines Art Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ═══════════════════════════════════
+       RESET
+    ═══════════════════════════════════ */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{height:100%;overflow:hidden;-webkit-text-size-adjust:100%}
+    body{
+      height:100%;overflow:hidden;
+      background:#080808;color:#f4f0eb;
+      font-family:'Space Mono',monospace;font-size:13px;line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      -webkit-tap-highlight-color:transparent;
+      overscroll-behavior:none;
+    }
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+
+    /* ═══════════════════════════════════
+       VARIABLES
+    ═══════════════════════════════════ */
+    :root{
+      --bk:#080808;--bk2:#0f0f0f;--bk3:#161616;
+      --g1:#1e1e1e;--g2:#2a2a2a;--g3:#444;--g4:#666;--g5:#999;--g6:#ccc;
+      --wh:#f4f0eb;--red:#e60023;--grn:#1d9e75;
+      --nav:56px;--bot:60px;
+    }
+
+    /* ═══════════════════════════════════
+       DESKTOP PHONE FRAME
+    ═══════════════════════════════════ */
+    @media(min-width:600px){
+      body{
+        display:flex;align-items:center;justify-content:center;
+        background:#040404;
+      }
+      #frame{
+        width:390px;height:min(844px,96vh);
+        border-radius:44px;overflow:hidden;
+        border:1.5px solid #222;
+        box-shadow:0 0 0 10px #111,0 40px 100px rgba(0,0,0,0.9);
+        position:relative;
+        flex-shrink:0;
+      }
+    }
+
+    /* ═══════════════════════════════════
+       APP LAYOUT — simple flexbox column
+       No position:fixed on inner elements
+    ═══════════════════════════════════ */
+    #frame{
+      width:100%;height:100%;
+      display:flex;flex-direction:column;
+      background:var(--bk);
+      overflow:hidden;
+    }
+
+    /* TOP NAV — fixed height, never scrolls */
+    #topnav{
+      flex:0 0 var(--nav);
+      height:var(--nav);
+      min-height:var(--nav);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 16px;
+      background:rgba(8,8,8,0.98);
+      border-bottom:0.5px solid var(--g2);
+      z-index:10;
+    }
+
+    .nav-brand{display:flex;align-items:center;gap:9px}
+    .nav-logo{width:30px;height:30px;border-radius:4px;object-fit:cover;border:0.5px solid var(--g3);flex-shrink:0}
+    .nav-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2.5px;color:var(--wh);line-height:1}
+    .nav-sub{font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:2px;color:var(--g4);line-height:1}
+    .nav-btn{
+      width:34px;height:34px;border-radius:50%;
+      border:0.5px solid var(--g2);background:var(--bk2);
+      display:flex;align-items:center;justify-content:center;cursor:pointer;
+    }
+
+    /* SCREENS AREA — fills remaining space between nav and bottom */
+    #screens{
+      flex:1 1 0;
+      min-height:0; /* critical — prevents flex child from overflowing */
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* Each screen fills #screens exactly */
+    .screen{
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      overflow-y:scroll;
+      overflow-x:hidden;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior-y:contain;
+      display:none;
+      /* GPU layer for smooth scroll */
+      transform:translateZ(0);
+      will-change:scroll-position;
+    }
+    .screen.on{display:block}
+
+    /* Spacer at bottom of every screen so content clears bottom nav */
+    .screen-end{height:calc(var(--bot) + 20px)}
+
+    /* BOTTOM NAV — fixed height, never scrolls */
+    #botnav{
+      flex:0 0 var(--bot);
+      height:var(--bot);
+      min-height:var(--bot);
+      display:flex;align-items:flex-start;
+      padding-top:6px;
+      background:rgba(8,8,8,0.98);
+      border-top:0.5px solid var(--g2);
+      z-index:10;
+    }
+
+    .bn{
+      flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+      cursor:pointer;padding:4px 0;opacity:0.35;transition:opacity 0.2s;
+    }
+    .bn.on{opacity:1}
+    .bn svg{width:20px;height:20px}
+    .bn-lbl{font-size:9px;letter-spacing:1px;color:var(--g5)}
+    .bn.on .bn-lbl{color:var(--wh)}
+    .bn-dot{width:4px;height:4px;border-radius:50%;background:var(--wh);opacity:0}
+    .bn.on .bn-dot{opacity:1}
+
+    /* ═══════════════════════════════════
+       GALLERY SCREEN
+    ═══════════════════════════════════ */
+    .hero-img{
+      width:100%;aspect-ratio:16/9;
+      position:relative;overflow:hidden;background:var(--bk2);
+    }
+    .hero-img img{width:100%;height:100%;object-fit:contain;object-position:center;filter:grayscale(20%) contrast(1.1);background:var(--black2);}
+    .hero-img-over{
+      position:absolute;inset:0;
+      background:linear-gradient(to top,var(--bk) 0%,transparent 55%);
+    }
+    .hero-img-txt{position:absolute;bottom:14px;left:14px}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--wh);line-height:1}
+    .hero-sub{font-size:9px;letter-spacing:2px;color:var(--g5);margin-top:3px}
+
+    .sec-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 8px}
+    .sec-lbl{font-size:9px;letter-spacing:2.5px;color:var(--g4);text-transform:uppercase}
+    .sec-act{font-size:10px;color:var(--g3);cursor:pointer}
+
+    .art-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--g1)}
+    .art-tile{position:relative;overflow:hidden;background:var(--bk2);cursor:pointer}
+    .art-tile img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(15%)}
+    .art-tile:active{opacity:0.85}
+    .art-info{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:28px 10px 10px;
+      background:linear-gradient(to top,rgba(8,8,8,0.92) 0%,transparent 100%);
+    }
+    .art-name{font-size:11px;font-weight:700;color:var(--wh)}
+    .art-style{font-size:9px;color:var(--g5);margin-top:2px;letter-spacing:0.5px}
+    .art-badge{
+      position:absolute;top:8px;right:8px;
+      background:rgba(8,8,8,0.85);border:0.5px solid var(--g3);
+      color:var(--wh);font-size:8px;letter-spacing:1px;padding:3px 7px;border-radius:2px;
+    }
+    .art-badge.sold{background:rgba(230,0,35,0.12);border-color:var(--red);color:var(--red)}
+
+    /* ═══════════════════════════════════
+       FEED SCREEN
+    ═══════════════════════════════════ */
+    .behold-wrap{padding:14px}
+    .feed-post{border-bottom:0.5px solid var(--g1);padding:12px 0}
+    .feed-hdr{display:flex;align-items:center;gap:10px;padding:0 14px 9px}
+    .feed-av{width:30px;height:30px;border-radius:50%;object-fit:cover;border:0.5px solid var(--g2);flex-shrink:0}
+    .feed-nm{font-size:11px;font-weight:700;color:var(--wh)}
+    .feed-tm{font-size:10px;color:var(--g4);margin-top:1px}
+    .feed-img{width:100%;aspect-ratio:1;object-fit:cover;display:block;filter:grayscale(10%)}
+    .feed-acts{display:flex;align-items:center;gap:14px;padding:9px 14px 6px}
+    .feed-act{display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;color:var(--g4)}
+    .feed-act svg{width:18px;height:18px}
+    .feed-comm-btn{
+      margin-left:auto;background:var(--wh);color:var(--bk);
+      font-size:9px;letter-spacing:1.5px;padding:6px 12px;border-radius:2px;
+      cursor:pointer;font-family:'Space Mono',monospace;text-transform:uppercase;
+    }
+    .feed-cap{padding:0 14px 6px;font-size:11px;color:var(--g5);line-height:1.5}
+    .feed-cap strong{color:var(--wh);font-weight:400}
+
+    /* ═══════════════════════════════════
+       COMMISSION SCREEN
+    ═══════════════════════════════════ */
+    .comm-hero{background:var(--bk2);border-bottom:0.5px solid var(--g1);padding:20px 16px}
+    .comm-title{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:var(--wh);line-height:1}
+    .comm-sub{font-family:'Crimson Pro',serif;font-size:14px;font-weight:300;color:var(--g5);margin-top:6px;line-height:1.6}
+    .slots{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(29,158,117,0.12);border:0.5px solid var(--grn);
+      color:var(--grn);font-size:9px;letter-spacing:1.5px;
+      padding:5px 10px;border-radius:2px;margin-top:10px;
+    }
+    .slots-dot{width:5px;height:5px;border-radius:50%;background:var(--grn);animation:blink 2s ease infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+    .form-wrap{padding:18px 16px}
+    .f-grp{margin-bottom:15px}
+    .f-lbl{font-size:9px;letter-spacing:2px;color:var(--g4);text-transform:uppercase;display:block;margin-bottom:6px}
+    .f-in,.f-sel,.f-ta{
+      width:100%;background:var(--bk2);border:0.5px solid var(--g2);border-radius:4px;
+      padding:11px 13px;font-family:'Space Mono',monospace;font-size:12px;
+      color:var(--wh);outline:none;-webkit-appearance:none;
+    }
+    .f-in:focus,.f-sel:focus,.f-ta:focus{border-color:var(--g4)}
+    .f-sel option{background:var(--bk2)}
+    .f-ta{height:90px;resize:none;line-height:1.5}
+
+    .price-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .price-opt{
+      background:var(--bk2);border:0.5px solid var(--g2);border-radius:4px;
+      padding:10px 6px;text-align:center;cursor:pointer;transition:border-color 0.2s;
+    }
+    .price-opt.sel{border-color:var(--wh);background:rgba(244,240,235,0.04)}
+    .price-amt{font-size:12px;font-weight:700;color:var(--wh)}
+    .price-lbl{font-size:9px;color:var(--g4);letter-spacing:1px;margin-top:2px}
+
+    .upload-box{
+      border:0.5px dashed var(--g3);border-radius:4px;
+      padding:18px;text-align:center;cursor:pointer;
+    }
+    .upload-box:active{border-color:var(--g5)}
+    .upload-txt{font-size:10px;color:var(--g4);letter-spacing:1px;margin-top:8px}
+
+    .submit-btn{
+      width:100%;background:var(--wh);color:var(--bk);border:none;
+      padding:14px;font-family:'Space Mono',monospace;font-size:11px;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;
+      margin-top:6px;
+    }
+    .submit-btn:active{opacity:0.85}
+    .mail-link{
+      display:block;text-align:center;margin-top:14px;font-size:10px;
+      color:var(--g4);letter-spacing:1px;
+    }
+    .mail-link a{color:var(--g5);border-bottom:0.5px solid var(--g3)}
+
+    /* ═══════════════════════════════════
+       CHAT SCREEN
+       Key fix: chat uses flex column,
+       messages flex-grow, input stays at bottom
+    ═══════════════════════════════════ */
+    #screen-chat{
+      display:none;
+      flex-direction:column;
+      overflow:hidden; /* chat manages its own scroll */
+    }
+    #screen-chat.on{display:flex}
+
+    .chat-hdr{
+      flex:0 0 auto;
+      display:flex;align-items:center;gap:10px;
+      padding:12px 14px;
+      border-bottom:0.5px solid var(--g1);background:var(--bk2);
+    }
+    .chat-av{width:34px;height:34px;border-radius:50%;object-fit:cover;border:0.5px solid var(--g2)}
+    .chat-nm{font-size:12px;font-weight:700;color:var(--wh)}
+    .chat-st{font-size:10px;color:var(--grn)}
+
+    .chat-msgs{
+      flex:1 1 0;min-height:0;
+      overflow-y:scroll;-webkit-overflow-scrolling:touch;
+      padding:14px;display:flex;flex-direction:column;gap:8px;
+    }
+
+    .chat-date{text-align:center;font-size:9px;letter-spacing:1.5px;color:var(--g3);margin:2px 0}
+
+    .bbl{max-width:78%;padding:9px 12px;font-size:12px;line-height:1.5;border-radius:12px}
+    .bbl-in{
+      background:var(--bk3);border:0.5px solid var(--g2);color:var(--g6);
+      align-self:flex-start;border-radius:2px 12px 12px 12px;
+    }
+    .bbl-out{
+      background:var(--wh);color:var(--bk);
+      align-self:flex-end;border-radius:12px 2px 12px 12px;
+    }
+    .bbl-time{font-size:9px;color:var(--g4);margin-top:3px}
+    .bbl-out .bbl-time{text-align:right;color:var(--g3)}
+
+    .chat-bar{
+      flex:0 0 auto;
+      display:flex;gap:9px;align-items:flex-end;
+      padding:10px 12px;
+      background:var(--bk2);border-top:0.5px solid var(--g1);
+    }
+    .chat-in{
+      flex:1;background:var(--bk3);border:0.5px solid var(--g2);
+      border-radius:20px;padding:9px 13px;
+      font-family:'Space Mono',monospace;font-size:12px;color:var(--wh);
+      outline:none;resize:none;max-height:90px;overflow-y:auto;line-height:1.4;
+    }
+    .chat-send-btn{
+      width:36px;height:36px;flex-shrink:0;border-radius:50%;
+      background:var(--wh);border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .chat-send-btn:active{opacity:0.8}
+
+    /* ═══════════════════════════════════
+       NOTIFICATIONS SCREEN
+    ═══════════════════════════════════ */
+    .notif-sec{padding:12px 14px 4px;font-size:9px;letter-spacing:2px;color:var(--g3);text-transform:uppercase;border-bottom:0.5px solid var(--g1)}
+    .notif{display:flex;align-items:flex-start;gap:11px;padding:13px 14px;border-bottom:0.5px solid var(--g1);cursor:pointer}
+    .notif:active{background:var(--bk2)}
+    .notif.unread{background:rgba(244,240,235,0.015)}
+    .notif-ic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .notif-body{flex:1;min-width:0}
+    .notif-ttl{font-size:12px;color:var(--wh);font-weight:700;margin-bottom:2px}
+    .notif-txt{font-size:11px;color:var(--g5);line-height:1.5}
+    .notif-tm{font-size:9px;color:var(--g3);margin-top:4px;letter-spacing:0.5px}
+    .notif-dot{width:6px;height:6px;border-radius:50%;background:var(--wh);flex-shrink:0;margin-top:5px}
+
+    /* ═══════════════════════════════════
+       BUY MODAL
+    ═══════════════════════════════════ */
+    #modal-bg{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,0.7);
+      z-index:50;display:none;
+      align-items:flex-end;
+    }
+    #modal-bg.on{display:flex}
+    .modal-sheet{
+      width:100%;background:var(--bk2);
+      border-top:0.5px solid var(--g2);
+      border-radius:16px 16px 0 0;
+      padding:18px 18px 28px;
+      animation:slideup 0.28s ease;
+    }
+    @keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+    .modal-handle{width:34px;height:3px;background:var(--g3);border-radius:2px;margin:0 auto 16px}
+    .modal-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--wh)}
+    .modal-price{font-size:16px;font-weight:700;color:var(--wh);margin-top:4px}
+    .modal-desc{font-family:'Crimson Pro',serif;font-size:14px;font-weight:300;color:var(--g5);margin-top:8px;line-height:1.6}
+    .modal-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+    .m-btn-p{
+      width:100%;background:var(--wh);color:var(--bk);border:none;
+      padding:13px;font-family:'Space Mono',monospace;font-size:11px;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;
+    }
+    .m-btn-p:active{opacity:0.85}
+    .m-btn-o{
+      width:100%;background:transparent;color:var(--g5);
+      border:0.5px solid var(--g3);padding:12px;
+      font-family:'Space Mono',monospace;font-size:11px;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;
+    }
+
+    /* ═══════════════════════════════════
+       TOAST
+    ═══════════════════════════════════ */
+    #toast{
+      position:absolute;
+      bottom:calc(var(--bot) + 14px);left:50%;
+      transform:translateX(-50%) translateY(8px);
+      background:var(--wh);color:var(--bk);
+      font-size:11px;letter-spacing:1px;
+      padding:9px 18px;border-radius:20px;
+      opacity:0;transition:all 0.25s ease;
+      z-index:60;white-space:nowrap;pointer-events:none;
+    }
+    #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+
+<div id="frame">
+
+  <!-- TOP NAV -->
+  <div id="topnav">
+    <div class="nav-brand">
+      <img class="nav-logo" src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="logo"/>
+      <div>
+        <div class="nav-name" id="navTitle">BLACKLINES</div>
+        <div class="nav-sub">ART STUDIOS</div>
+      </div>
+    </div>
+    <div class="nav-btn">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#666" stroke-width="1.3">
+        <circle cx="6" cy="6" r="4.5"/><line x1="9.8" y1="9.8" x2="13" y2="13"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SCREENS -->
+  <div id="screens">
+
+    <!-- ── GALLERY ── -->
+    <div class="screen on" id="screen-gallery">
+      <div class="hero-img">
+        <img src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="Featured"/>
+        <div class="hero-img-over"></div>
+        <div class="hero-img-txt">
+          <div class="hero-title">NEW DROP</div>
+          <div class="hero-sub">Original · Limited prints · 2026</div>
+        </div>
+      </div>
+      <div class="sec-head">
+        <div class="sec-lbl">All Works</div>
+        <div class="sec-act">Filter ↓</div>
+      </div>
+      <div class="art-grid" id="artGrid"></div>
+      <div class="screen-end"></div>
+    </div>
+
+    <!-- ── FEED ── -->
+    <div class="screen" id="screen-feed">
+      <div class="sec-head" style="padding-top:14px">
+        <div class="sec-lbl">Instagram Feed</div>
+        <div class="sec-act" onclick="window.open('https://www.instagram.com/blacklinesartstudios/','_blank')">Follow →</div>
+      </div>
+      <div class="behold-wrap">
+        <behold-widget feed-id="eNNEIMSOYEeLPBICuHKP"></behold-widget>
+        <script>(()=>{const d=document,s=d.createElement('script');s.type='module';s.src='https://w.behold.so/widget.js';d.head.append(s);})()</script>
+      </div>
+      <div class="feed-post">
+        <div class="feed-hdr">
+          <img class="feed-av" src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="av"/>
+          <div>
+            <div class="feed-nm">blacklinesartstudios</div>
+            <div class="feed-tm">2 hours ago</div>
+          </div>
+        </div>
+        <img class="feed-img" src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="post"/>
+        <div class="feed-acts">
+          <div class="feed-act" onclick="toast('Liked!')">
+            <svg viewBox="0 0 20 20" fill="none" stroke="#666" stroke-width="1.5"><path d="M10 17s-7-4.35-7-9a5 5 0 0110 0 5 5 0 0110 0c0 4.65-7 9-7 9z" stroke-linecap="round"/></svg>248
+          </div>
+          <div class="feed-act" onclick="go('chat')">
+            <svg viewBox="0 0 20 20" fill="none" stroke="#666" stroke-width="1.5"><path d="M18 13a2 2 0 01-2 2H6l-4 4V5a2 2 0 012-2h12a2 2 0 012 2v8z" stroke-linecap="round"/></svg>12
+          </div>
+          <div class="feed-comm-btn" onclick="go('commission')">Commission →</div>
+        </div>
+        <div class="feed-cap"><strong>blacklinesartstudios</strong> Black Panther portrait — limited prints available. DM to order. <span style="color:var(--g3)">#blackandwhite #lineart #commission</span></div>
+      </div>
+      <div class="screen-end"></div>
+    </div>
+
+    <!-- ── COMMISSION ── -->
+    <div class="screen" id="screen-commission">
+      <div class="comm-hero">
+        <div class="comm-title">Commission<br>a Piece</div>
+        <div class="comm-sub">Share your vision — we create, you own it forever.</div>
+        <div class="slots"><div class="slots-dot"></div>3 slots open this month</div>
+      </div>
+      <div class="form-wrap">
+        <div class="f-grp">
+          <label class="f-lbl">Your name</label>
+          <input class="f-in" type="text" placeholder="Enter your name" id="fn"/>
+        </div>
+        <div class="f-grp">
+          <label class="f-lbl">Email / WhatsApp</label>
+          <input class="f-in" type="text" placeholder="How to reach you" id="fc"/>
+        </div>
+        <div class="f-grp">
+          <label class="f-lbl">Art style</label>
+          <select class="f-sel" id="fs">
+            <option value="">Select a style...</option>
+            <option>Black &amp; White Portrait</option>
+            <option>Character Design</option>
+            <option>Cinematic Scene</option>
+            <option>Line Art / Sketch</option>
+            <option>Digital Illustration</option>
+            <option>Custom / Other</option>
+          </select>
+        </div>
+        <div class="f-grp">
+          <label class="f-lbl">Describe your idea</label>
+          <textarea class="f-ta" placeholder="Tell me your concept — a character, scene, mood..." id="fi"></textarea>
+        </div>
+        <div class="f-grp">
+          <label class="f-lbl">Budget</label>
+          <div class="price-row">
+            <div class="price-opt" onclick="pickPrice(this,'₹1,500')"><div class="price-amt">₹1,500</div><div class="price-lbl">Sketch</div></div>
+            <div class="price-opt" onclick="pickPrice(this,'₹2,500')"><div class="price-amt">₹2,500</div><div class="price-lbl">Detailed</div></div>
+            <div class="price-opt" onclick="pickPrice(this,'₹4,000+')"><div class="price-amt">₹4,000+</div><div class="price-lbl">Premium</div></div>
+          </div>
+        </div>
+        <div class="f-grp">
+          <label class="f-lbl">Reference image (optional)</label>
+          <div class="upload-box" onclick="toast('Choose from gallery')">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#555" stroke-width="1.3" style="margin:0 auto">
+              <rect x="2" y="7" width="24" height="18" rx="3"/>
+              <circle cx="10" cy="14" r="3"/>
+              <path d="M2 20l6-5 5 4 4-5 9 7"/>
+              <path d="M18 2l4 4-4 4"/><line x1="9" y1="6" x2="22" y2="6"/>
+            </svg>
+            <div class="upload-txt">Tap to upload reference</div>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">Send Commission Request →</button>
+        <div class="mail-link">Or email: <a href="mailto:blacklinesartstudios@gmail.com">blacklinesartstudios@gmail.com</a></div>
+      </div>
+      <div class="screen-end"></div>
+    </div>
+
+    <!-- ── CHAT ── -->
+    <div class="screen" id="screen-chat">
+      <div class="chat-hdr">
+        <img class="chat-av" src="https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg" alt="studio"/>
+        <div>
+          <div class="chat-nm">Blacklines Studio</div>
+          <div class="chat-st">● Online</div>
+        </div>
+      </div>
+      <div class="chat-msgs" id="chatMsgs">
+        <div class="chat-date">Today</div>
+        <div>
+          <div class="bbl bbl-in">Hi! Welcome to Blacklines Art Studios 🖤 How can I help you?</div>
+          <div class="bbl-time">10:00 AM</div>
+        </div>
+        <div>
+          <div class="bbl bbl-in">I create black &amp; white portraits, character designs, and cinematic illustrations. Ask me anything or send a commission request!</div>
+          <div class="bbl-time">10:01 AM</div>
+        </div>
+      </div>
+      <div class="chat-bar">
+        <textarea class="chat-in" id="chatIn" rows="1" placeholder="Type a message..." onkeydown="chatKey(event)"></textarea>
+        <button class="chat-send-btn" onclick="sendMsg()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round">
+            <line x1="2" y1="12" x2="12" y2="2"/><polyline points="5,2 12,2 12,9"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── NOTIFICATIONS ── -->
+    <div class="screen" id="screen-notifs">
+      <div class="notif-sec">New</div>
+      <div class="notif unread" onclick="toast('Opening art drop...')">
+        <div class="notif-ic" style="background:rgba(29,158,117,0.15)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1d9e75" stroke-width="1.3"><rect x="2" y="2" width="12" height="12" rx="2"/><line x1="8" y1="5" x2="8" y2="11"/><line x1="5" y1="8" x2="11" y2="8"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-ttl">New art drop!</div>
+          <div class="notif-txt">Void Walker series — 6 limited prints now available.</div>
+          <div class="notif-tm">2 minutes ago</div>
+        </div>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="notif unread" onclick="go('commission')">
+        <div class="notif-ic" style="background:rgba(244,240,235,0.06)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#ccc" stroke-width="1.3"><rect x="2" y="3" width="12" height="10" rx="2"/><line x1="2" y1="7" x2="14" y2="7"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-ttl">Commission update</div>
+          <div class="notif-txt">Your sketch is ready for review.</div>
+          <div class="notif-tm">1 hour ago</div>
+        </div>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="notif unread" onclick="go('chat')">
+        <div class="notif-ic" style="background:rgba(193,53,132,0.15)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#c13584" stroke-width="1.3"><path d="M14 10a2 2 0 01-2 2H5l-3 3V4a2 2 0 012-2h9a2 2 0 012 2v6z"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-ttl">New message</div>
+          <div class="notif-txt">"Your commission is confirmed! Starting tomorrow." 🖤</div>
+          <div class="notif-tm">3 hours ago</div>
+        </div>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="notif-sec" style="margin-top:6px">Earlier</div>
+      <div class="notif" onclick="toast('3 slots remaining')">
+        <div class="notif-ic" style="background:rgba(68,68,68,0.25)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#666" stroke-width="1.3"><circle cx="8" cy="8" r="6"/><line x1="8" y1="4.5" x2="8" y2="8"/><line x1="8" y1="10.5" x2="8" y2="11" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-ttl">Commission slots open</div>
+          <div class="notif-txt">Only 3 slots remaining for this month.</div>
+          <div class="notif-tm">2 days ago</div>
+        </div>
+      </div>
+      <div class="notif" onclick="go('feed')">
+        <div class="notif-ic" style="background:rgba(68,68,68,0.25)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#666" stroke-width="1.3"><rect x="2" y="2" width="12" height="12" rx="2"/><circle cx="5.5" cy="5.5" r="1.5"/><path d="M2 11l3.5-3.5 3 3 2.5-3 3 3.5"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-ttl">New Instagram post</div>
+          <div class="notif-txt">Crimson Silence — new cinematic portrait is live.</div>
+          <div class="notif-tm">3 days ago</div>
+        </div>
+      </div>
+      <div class="screen-end"></div>
+    </div>
+
+  </div><!-- /screens -->
+
+  <!-- BOTTOM NAV -->
+  <div id="botnav">
+    <div class="bn on" id="bn-gallery" onclick="go('gallery')">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3">
+        <rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/>
+        <rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/>
+      </svg>
+      <div class="bn-dot"></div>
+      <div class="bn-lbl">Gallery</div>
+    </div>
+    <div class="bn" id="bn-feed" onclick="go('feed')">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3">
+        <rect x="2" y="2" width="16" height="16" rx="4"/><circle cx="7" cy="7" r="2.5"/>
+        <path d="M2 14l5-4 4 4 3-4 4 5" stroke-linecap="round"/>
+      </svg>
+      <div class="bn-dot"></div>
+      <div class="bn-lbl">Feed</div>
+    </div>
+    <div class="bn" id="bn-commission" onclick="go('commission')">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3">
+        <rect x="2" y="4" width="16" height="13" rx="2"/><line x1="2" y1="9" x2="18" y2="9"/>
+        <line x1="6" y1="2" x2="6" y2="6"/><line x1="14" y1="2" x2="14" y2="6"/>
+      </svg>
+      <div class="bn-dot"></div>
+      <div class="bn-lbl">Commission</div>
+    </div>
+    <div class="bn" id="bn-chat" onclick="go('chat')">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3">
+        <path d="M18 13a2 2 0 01-2 2H6l-4 4V5a2 2 0 012-2h12a2 2 0 012 2v8z" stroke-linecap="round"/>
+      </svg>
+      <div class="bn-dot"></div>
+      <div class="bn-lbl">Chat</div>
+    </div>
+    <div class="bn" id="bn-notifs" onclick="go('notifs')">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3">
+        <path d="M10 2a6 6 0 016 6v4l2 2H2l2-2V8a6 6 0 016-6z"/>
+        <path d="M8 16a2 2 0 004 0"/>
+      </svg>
+      <div class="bn-dot"></div>
+      <div class="bn-lbl">Alerts</div>
+    </div>
+  </div>
+
+  <!-- BUY MODAL -->
+  <div id="modal-bg" onclick="closeModal(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-name" id="mName">Artwork</div>
+      <div class="modal-price" id="mPrice">₹2,499</div>
+      <div class="modal-desc">Original black &amp; white artwork — high-res digital file + print option available.</div>
+      <div class="modal-btns">
+        <button class="m-btn-p" onclick="buyNow()">Buy Now — UPI / Card →</button>
+        <button class="m-btn-o" onclick="go('commission');closeModal()">Request Custom Version</button>
+        <button class="m-btn-o" onclick="shareIt()">Share this artwork</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+</div><!-- /frame -->
+
+<script>
+/* ── DATA ── */
+var arts=[
+  {name:'Black Panther', price:'₹2,499',style:'Portrait · Ink',    sold:false,img:'https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'},
+  {name:'Void Walker',   price:'₹1,999',style:'Digital · Limited', sold:false,img:'https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'},
+  {name:'Crimson Silence',price:'₹3,200',style:'Cinematic · Ink', sold:true, img:'https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'},
+  {name:'Ember City',    price:'₹1,750',style:'Scene · Digital',   sold:false,img:'https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'},
+  {name:'The Witness',   price:'₹2,800',style:'Portrait · Custom', sold:false,img:'https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'},
+  {name:'Nightfall',     price:'₹1,500',style:'Digital · NFT',     sold:true, img:'https://i.pinimg.com/736x/bf/ce/b5/bfceb571bb4f93871063827df6d49f09.jpg'},
+];
+
+/* ── GALLERY BUILD ── */
+var grid=document.getElementById('artGrid');
+arts.forEach(function(a,i){
+  var t=document.createElement('div');
+  t.className='art-tile';
+  if(a.sold)t.style.opacity='0.55';
+  t.innerHTML='<img src="'+a.img+'" alt="'+a.name+'" loading="'+(i<2?'eager':'lazy')+'"/>'+
+    '<div class="art-info"><div class="art-name">'+a.name+'</div><div class="art-style">'+a.style+'</div></div>'+
+    '<div class="art-badge'+(a.sold?' sold':'')+'">'+( a.sold?'Sold':a.price)+'</div>';
+  if(!a.sold)t.onclick=function(){openModal(a)};
+  grid.appendChild(t);
+});
+
+/* ── NAVIGATION ── */
+var cur='gallery';
+var titles={gallery:'BLACKLINES',feed:'Feed',commission:'Commission',chat:'Chat',notifs:'Alerts'};
+
+function go(screen){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on')});
+  document.querySelectorAll('.bn').forEach(function(b){b.classList.remove('on')});
+  var s=document.getElementById('screen-'+screen);
+  var b=document.getElementById('bn-'+screen);
+  if(s)s.classList.add('on');
+  if(b)b.classList.add('on');
+  document.getElementById('navTitle').textContent=titles[screen]||'BLACKLINES';
+  cur=screen;
+  if(screen==='chat'){
+    setTimeout(function(){
+      var m=document.getElementById('chatMsgs');
+      m.scrollTop=m.scrollHeight;
+    },50);
+  }
+}
+
+/* ── MODAL ── */
+var curArt=null;
+function openModal(a){
+  curArt=a;
+  document.getElementById('mName').textContent=a.name;
+  document.getElementById('mPrice').textContent=a.price;
+  document.getElementById('modal-bg').classList.add('on');
+}
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-bg'))
+    document.getElementById('modal-bg').classList.remove('on');
+}
+function buyNow(){
+  closeModal();
+  window.open('mailto:blacklinesartstudios@gmail.com?subject=Purchase: '+(curArt?curArt.name:'')+'&body=Hi! I want to buy '+(curArt?curArt.name:'')+'. Please send payment details.','_blank');
+  toast('Opening email...');
+}
+function shareIt(){
+  closeModal();
+  if(navigator.share&&curArt){
+    navigator.share({title:curArt.name+' — Blacklines',url:'https://www.instagram.com/blacklinesartstudios/'});
+  } else { toast('Link copied!'); }
+}
+
+/* ── COMMISSION ── */
+var selPrice='';
+function pickPrice(el,p){
+  selPrice=p;
+  document.querySelectorAll('.price-opt').forEach(function(o){o.classList.remove('sel')});
+  el.classList.add('sel');
+}
+function submitForm(){
+  var n=document.getElementById('fn').value.trim();
+  var c=document.getElementById('fc').value.trim();
+  var s=document.getElementById('fs').value;
+  var i=document.getElementById('fi').value.trim();
+  if(!n||!c||!s||!i){toast('Please fill all required fields');return;}
+  var sub='Commission Request — '+s;
+  var body='Name: '+n+'\nContact: '+c+'\nStyle: '+s+'\nBudget: '+(selPrice||'Not specified')+'\n\nIdea:\n'+i;
+  window.open('mailto:blacklinesartstudios@gmail.com?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body),'_blank');
+  toast('Request sent! We\'ll reply within 24hrs ✓');
+  document.getElementById('fn').value='';
+  document.getElementById('fc').value='';
+  document.getElementById('fs').value='';
+  document.getElementById('fi').value='';
+  selPrice='';
+  document.querySelectorAll('.price-opt').forEach(function(o){o.classList.remove('sel')});
+}
+
+/* ── CHAT ── */
+var replies=[
+  'Thanks for reaching out! I\'ll reply shortly 🖤',
+  'Great! Feel free to send a commission request for a detailed quote.',
+  'I love that idea! Fill the commission form and let\'s make it happen.',
+  'Currently 3 commission slots open this month — limited!',
+  'Follow @blacklinesartstudios on Instagram for latest work.',
+  'Typical turnaround is 5–10 days depending on complexity ✨',
+];
+var ri=0;
+
+function sendMsg(){
+  var inp=document.getElementById('chatIn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  var msgs=document.getElementById('chatMsgs');
+  var t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  var out=document.createElement('div');
+  out.innerHTML='<div class="bbl bbl-out">'+esc(txt)+'</div><div class="bbl-time" style="text-align:right;color:var(--g3)">'+t+'</div>';
+  msgs.appendChild(out);
+  inp.value='';inp.style.height='auto';
+  msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(function(){
+    var r=replies[ri%replies.length];ri++;
+    var inn=document.createElement('div');
+    inn.innerHTML='<div class="bbl bbl-in">'+r+'</div><div class="bbl-time">'+t+'</div>';
+    msgs.appendChild(inn);
+    msgs.scrollTop=msgs.scrollHeight;
+  },1100);
+}
+
+function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+
+document.getElementById('chatIn').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,90)+'px';
+});
+
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* ── TOAST ── */
+var tt;
+function toast(msg){
+  var el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('on');
+  clearTimeout(tt);tt=setTimeout(function(){el.classList.remove('on');},2400);
+}
+</script>
+</body>
+</html>
