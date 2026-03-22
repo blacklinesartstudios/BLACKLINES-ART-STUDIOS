@@ -553,7 +553,8 @@
     .soc-card { padding: 22px 14px; border-right: 1px solid var(--g1); display: block; transition: background 0.2s; -webkit-tap-highlight-color: transparent; }
     .soc-card:last-child { border-right: none; }
     .soc-card:hover, .soc-card:active { background: var(--black3); }
-    .soc-dot { width: 6px; height: 6px; border-radius: 50%; margin-bottom: 10px; }
+    .soc-icon { width: 28px; height: 28px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; border-radius: 6px; }
+    .soc-icon svg { width: 18px; height: 18px; }
     .soc-name { font-size: 10px; font-weight: 700; color: var(--g5); letter-spacing: 1px; margin-bottom: 4px; display: block; }
     .soc-handle { font-size: 9px; color: var(--g2); letter-spacing: 0.5px; display: block; word-break: break-all; }
 
@@ -961,32 +962,32 @@
     </div>
     <div class="socials-grid">
       <a class="soc-card" href="https://www.instagram.com/blacklinesartstudios/" target="_blank" rel="noopener">
-        <div class="soc-dot" style="background:#c13584;"></div>
+        <div class="soc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c13584" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="#c13584" stroke="none"/></svg></div>
         <span class="soc-name">Instagram</span>
         <span class="soc-handle">@blacklinesartstudios</span>
       </a>
       <a class="soc-card" href="https://www.facebook.com/blacklinesartstudios" target="_blank" rel="noopener">
-        <div class="soc-dot" style="background:#1877f2;"></div>
+        <div class="soc-icon"><svg viewBox="0 0 24 24" fill="#1877f2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>
         <span class="soc-name">Facebook</span>
         <span class="soc-handle">blacklinesartstudios</span>
       </a>
       <a class="soc-card" href="https://www.youtube.com/@BLACKLINESArtStudios" target="_blank" rel="noopener">
-        <div class="soc-dot" style="background:#ff0000;"></div>
+        <div class="soc-icon"><svg viewBox="0 0 24 24" fill="#ff0000"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="white" points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02"/></svg></div>
         <span class="soc-name">YouTube</span>
         <span class="soc-handle">@BLACKLINESArtStudios</span>
       </a>
       <a class="soc-card" href="https://www.threads.com/@blacklinesartstudios" target="_blank" rel="noopener">
-        <div class="soc-dot" style="background:#f0f0f0;"></div>
+        <div class="soc-icon"><svg viewBox="0 0 24 24" fill="#f0f0f0"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068v-.068C1.5 5.789 4.944 1.5 12 1.5c3.091 0 5.724.88 7.621 2.545 1.877 1.649 2.895 3.943 2.879 6.479l-.003.077c-.036 3.18-1.19 5.522-3.329 6.763-1.485.864-3.236 1.108-5.042.688a5.5 5.5 0 01-.94 2.948zm-.186-4.5c1.666 0 2.954-.424 3.83-1.262.88-.839 1.33-2.05 1.33-3.6 0-1.557-.447-2.764-1.33-3.6C14.954 10.2 13.666 9.776 12 9.776s-2.954.424-3.83 1.262c-.88.839-1.33 2.05-1.33 3.6 0 1.557.447 2.764 1.33 3.6.876.838 2.164 1.262 3.83 1.262z"/></svg></div>
         <span class="soc-name">Threads</span>
         <span class="soc-handle">@blacklinesartstudios</span>
       </a>
       <a class="soc-card" href="https://in.pinterest.com/blacklinesartstudios/" target="_blank" rel="noopener">
-        <div class="soc-dot" style="background:#e60023;"></div>
+        <div class="soc-icon"><svg viewBox="0 0 24 24" fill="#e60023"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg></div>
         <span class="soc-name">Pinterest</span>
         <span class="soc-handle">blacklinesartstudios</span>
       </a>
       <a class="soc-card" href="https://scan.page/p/tGz5aV" target="_blank" rel="noopener">
-        <div class="soc-dot" style="background:#888;"></div>
+        <div class="soc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
         <span class="soc-name">All Links</span>
         <span class="soc-handle">scan.page/p/tGz5aV</span>
       </a>
